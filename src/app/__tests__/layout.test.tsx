@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import RootLayout from '../layout'
 
@@ -11,7 +12,12 @@ jest.mock('next/font/google', () => ({
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<{}>) => <div {...props}>{children}</div>,
+    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <div {...props}>{children}</div>,
+    h1: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <h1 {...props}>{children}</h1>,
+    p: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <p {...props}>{children}</p>,
   },
 }))
 

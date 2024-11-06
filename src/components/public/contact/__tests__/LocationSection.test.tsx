@@ -4,7 +4,10 @@ import LocationSection from '../LocationSection';
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<object>) => <div {...props}>{children}</div>,
+    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <div {...props}>{children}</div>,
+    h2: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <h2 {...props}>{children}</h2>,
   },
 }));
 

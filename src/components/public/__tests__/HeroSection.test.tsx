@@ -1,6 +1,18 @@
 import { render, screen } from '@testing-library/react'
 import HeroSection from '../HeroSection'
 
+// Mock framer-motion
+jest.mock('framer-motion', () => ({
+  motion: {
+    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <div {...props}>{children}</div>,
+    h1: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <h1 {...props}>{children}</h1>,
+    p: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <p {...props}>{children}</p>,
+  },
+}))
+
 describe('HeroSection Component', () => {
   it('renders main heading and content', () => {
     render(<HeroSection />)

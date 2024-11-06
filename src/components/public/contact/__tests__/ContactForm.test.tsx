@@ -4,8 +4,10 @@ import ContactForm from '../ContactForm';
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<object>) => <div {...props}>{children}</div>,
-    form: ({ children, ...props }: React.PropsWithChildren<object>) => <form {...props}>{children}</form>,
+    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <div {...props}>{children}</div>,
+    form: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <form {...props}>{children}</form>,
   },
 }));
 

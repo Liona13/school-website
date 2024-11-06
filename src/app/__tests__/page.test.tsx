@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom'
 import { render, screen, within } from '@testing-library/react'
-import { act } from '@testing-library/react'
 import Home from '../page'
 
 // Mock the components that use client-side features

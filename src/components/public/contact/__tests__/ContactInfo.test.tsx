@@ -4,7 +4,8 @@ import ContactInfo from '../ContactInfo';
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<object>) => <div {...props}>{children}</div>,
+    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <div {...props}>{children}</div>,
   },
 }));
 
@@ -80,7 +81,7 @@ describe('ContactInfo', () => {
   });
 
   it('maintains consistent text hierarchy', () => {
-    render(<ContactInfo />);
+    const { container } = render(<ContactInfo />);
     
     // Check section titles
     const titles = screen.getAllByRole('heading', { level: 3 });

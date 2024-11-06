@@ -17,36 +17,34 @@ const ContactForm = () => {
     subject: '',
     message: ''
   });
-  const [errors, setErrors] = useState<Partial<FormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const validateForm = () => {
-    const newErrors: Partial<FormData> = {};
-    
     if (!formData.name) {
-      newErrors.name = 'Name is required';
-    } else if (formData.name.length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
+      setErrorMessage('Name is required');
+      return false;
     }
-
     if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
+      setErrorMessage('Email is required');
+      return false;
     }
-
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setErrorMessage('Please enter a valid email');
+      return false;
+    }
     if (!formData.message) {
-      newErrors.message = 'Message is required';
+      setErrorMessage('Message is required');
+      return false;
     }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setErrorMessage(null);
+
     if (!validateForm()) return;
 
     setIsSubmitting(true);
@@ -56,8 +54,8 @@ const ContactForm = () => {
       await new Promise(resolve => setTimeout(resolve, 1500));
       setIsSuccess(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error) {
-      setErrors({ message: 'Something went wrong. Please try again.' });
+    } catch {
+      setErrorMessage('Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -101,12 +99,12 @@ const ContactForm = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.name ? 'border-red-300' : 'border-gray-300'
+                    errorMessage === 'Name is required' ? 'border-red-300' : 'border-gray-300'
                   } focus:outline-none focus:ring-2 focus:ring-green-500`}
                   disabled={isSubmitting}
                 />
-                {errors.name && (
-                  <p role="alert" className="text-red-500 text-sm mt-1">{errors.name}</p>
+                {errorMessage === 'Name is required' && (
+                  <p role="alert" className="text-red-500 text-sm mt-1">{errorMessage}</p>
                 )}
               </div>
 
@@ -120,12 +118,15 @@ const ContactForm = () => {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.email ? 'border-red-300' : 'border-gray-300'
+                    errorMessage === 'Email is required' ? 'border-red-300' : 'border-gray-300'
                   } focus:outline-none focus:ring-2 focus:ring-green-500`}
                   disabled={isSubmitting}
                 />
-                {errors.email && (
-                  <p role="alert" className="text-red-500 text-sm mt-1">{errors.email}</p>
+                {errorMessage === 'Email is required' && (
+                  <p role="alert" className="text-red-500 text-sm mt-1">{errorMessage}</p>
+                )}
+                {errorMessage === 'Please enter a valid email' && (
+                  <p role="alert" className="text-red-500 text-sm mt-1">{errorMessage}</p>
                 )}
               </div>
 
@@ -153,12 +154,12 @@ const ContactForm = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className={`w-full px-4 py-3 rounded-lg border ${
-                    errors.message ? 'border-red-300' : 'border-gray-300'
+                    errorMessage === 'Message is required' ? 'border-red-300' : 'border-gray-300'
                   } focus:outline-none focus:ring-2 focus:ring-green-500`}
                   disabled={isSubmitting}
                 />
-                {errors.message && (
-                  <p role="alert" className="text-red-500 text-sm mt-1">{errors.message}</p>
+                {errorMessage === 'Message is required' && (
+                  <p role="alert" className="text-red-500 text-sm mt-1">{errorMessage}</p>
                 )}
               </div>
 

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
 import percySnapshot from '@percy/playwright'
 
 test.describe('Visual Regression Tests', () => {

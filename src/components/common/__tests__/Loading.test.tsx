@@ -4,8 +4,10 @@ import Loading from '../Loading';
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<{}>) => <div {...props}>{children}</div>,
-    p: ({ children, ...props }: React.PropsWithChildren<{}>) => <p {...props}>{children}</p>,
+    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <div {...props}>{children}</div>,
+    p: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => 
+      <p {...props}>{children}</p>,
   },
 }));
 
